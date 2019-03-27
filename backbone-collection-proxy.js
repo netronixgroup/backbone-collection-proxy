@@ -24,7 +24,7 @@ var blacklistedMethods = [
 ];
 
 var eventWhiteList = [
-  'add', 'remove', 'reset', 'sort', 'destroy', 'sync', 'request', 'error'
+  'add', 'remove', 'reset', 'sort', 'destroy', 'sync', 'request', 'error', 'update'
 ];
 
 function proxyCollection(from, target) {
@@ -48,6 +48,8 @@ function proxyCollection(from, target) {
       if (_.contains(['add', 'remove', 'destroy'], eventName)) {
         args[2] = target;
       } else if (_.contains(['reset', 'sort'], eventName)) {
+        args[1] = target;
+      } else if (_.contains(['update'], eventName)) {
         args[1] = target;
       }
       target.trigger.apply(this, args);
